@@ -68,3 +68,4 @@ void    memory_error(t_list **head)
     ft_lstclear(head, free);
     exit(1);
 }
+

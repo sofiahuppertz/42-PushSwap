@@ -6,8 +6,9 @@ CFLAGS = -Wall -Wextra -Werror
 
 SRC_NAMES = main.c \
 		others.c \
-		# instructions.c \
-		#	simple_sort.c \
+		instructions.c \
+		small_stack_sort.c \
+		sort.c \
 		#	radix_sort.c \
 		
 

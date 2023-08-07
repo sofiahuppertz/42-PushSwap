@@ -9,6 +9,7 @@ int main(int argc, char *argv[])
 {
     t_list *stack_a;
     t_list *stack_b;
+
     if  (argc < 2)
     {
         return 0;

@@ -7,9 +7,10 @@ CFLAGS = -Wall -Wextra -Werror
 SRC_NAMES = main.c \
 		others.c \
 		instructions.c \
+		selection_sort.c \
 		small_stack_sort.c \
-		sort.c \
-		#	radix_sort.c \
+		sort.c 
+		
 		
 
 SRCS = $(addprefix srcs/, $(SRC_NAMES))
@@ -18,7 +19,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME) : $(LIBFT) $(OBJS)
-	cc $(CFLAGS) -L 42-Libft/libft/ -lft $(OBJS) -o $(NAME)
+	cc -g $(CFLAGS) -L 42-Libft/libft/ -lft $(OBJS) -o $(NAME)
 
 %.o: srcs/%.c
 	cc $(CFLAGS) $(INCLUDE) -c $< -o $@

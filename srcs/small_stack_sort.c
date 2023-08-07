@@ -10,6 +10,8 @@ void sort_3(t_list **stack_a)
     first = *stack_a;
     second = first->next;
     third = second->next;
+    if (sorted(stack_a))
+        return ;
     if (*(int *)first->content > *(int *)second->content && *(int *)first->content < *(int *)third->content)
         swap_a(stack_a);
     else if (*(int *)first->content > *(int *)second->content && *(int *)first->content > *(int *)third->content)

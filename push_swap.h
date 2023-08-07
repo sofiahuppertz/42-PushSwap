@@ -10,8 +10,9 @@
 int find_min(t_list **stack_a);
 int get_size(int argc, char *argv[], char ***args);
 void load_stack(int argc, char **args, t_list **head, int size);
-void make_stacks(int argc, char *argv[], t_list **head);
+int make_stacks(int argc, char *argv[], t_list **head);
 void    memory_error(t_list **head);
+void selection_sort(t_list **stack_a, t_list **stack_b, int size);
 void sort_3(t_list **stack_a);
 void    sort_4(t_list **stack_a, t_list **stack_b);
 void    sort_5(t_list **stack_a, t_list **stack_b);

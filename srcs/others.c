@@ -2,14 +2,14 @@
 
 //GET STACK: stack can be passed in a single argument or many. 
 //List where first arg is the top of the stack
-void make_stacks(int argc, char *argv[], t_list **head)
+int make_stacks(int argc, char *argv[], t_list **head)
 {
     int size;
     char **args;
 
     size = get_size(argc, argv, &args);
     load_stack(argc, args, head, size);
-
+    return (size);
 }
 
 int get_size(int argc, char *argv[], char ***args)

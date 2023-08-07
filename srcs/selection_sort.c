@@ -1,5 +1,7 @@
 #include "../push_swap.h"
 
+
+//TODO: break into smaller stacks
 void selection_sort(t_list **stack_a, t_list **stack_b, int size)
 {
     int index_min;

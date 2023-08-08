@@ -19,16 +19,18 @@
 # include <unistd.h>
 
 int		calculate_median(t_list **stack_a, int n);
+void check_forbidden(int *num, t_list **head);
 int		check_reversed_top(t_list **stack);
 void	extract_lower_bound(t_list **stack_a, t_list **stack_b, int median,
 			const int size);
 int		find_min(t_list **stack_a);
+void	ft_error(t_list **head);
 int		get_max(t_list **stack);
-int		get_size(int argc, char *argv[], char ***args);
+int get_size(int argc, char *argv[], t_list **char_args);
 void get_top_and_bottom(t_list *stack, t_list **top, t_list **bottom);
-void	load_stack(int argc, char **args, t_list **head, int size);
+int is_numeric(char *str);
+void load_stack(t_list **args_char, t_list **head);
 int		make_stacks(int argc, char *argv[], t_list **head);
-void	memory_error(t_list **head);
 void	median_sort(t_list **stack_a, t_list **stack_b, int size);
 void	sort_3(t_list **stack_a);
 void	sort_4(t_list **stack_a, t_list **stack_b);

@@ -5,14 +5,12 @@ INCLUDE = -I./ -I./42-Libft/libft/
 CFLAGS = -Wall -Wextra -Werror
 
 SRC_NAMES = main.c \
-		others.c \
 		instructions.c \
 		median_sort.c \
 		median_sort_helpers.c \
+		parsing.c \
 		small_stack_sort.c \
-		sort.c 
-		
-		
+		sort.c \
 
 SRCS = $(addprefix srcs/, $(SRC_NAMES))
 OBJS = $(SRCS:.c=.o)
@@ -20,10 +18,10 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME) : $(LIBFT) $(OBJS)
-	cc  $(CFLAGS) $(OBJS) -L42-Libft/libft -lft -o $(NAME)
+	cc -g $(CFLAGS) $(OBJS) -L42-Libft/libft -lft -o $(NAME)
 
 %.o: srcs/%.c
-	cc $(CFLAGS) $(INCLUDE) -c $< -o $@
+	cc -g $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 $(LIBFT):
 	make -C 42-Libft/libft

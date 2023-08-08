@@ -12,65 +12,59 @@
 
 #include "../push_swap.h"
 
-void    median_sort(t_list **stack_a, t_list **stack_b, const int n)
+void    median_sort(t_list **stack_a, t_list **stack_b, int size)
 {
-    int stack_size;
-    int max_value;
     int median;
 
-    stack_size = n;
-    max_value = get_max(stack_a);
-    while (stack_size > 3)
+    while (size > 3)
     {
         if (sorted(stack_a))
-            break;
-        median = calculate_median(stack_a, stack_size);
-        extract_lower_bound(stack_a, stack_b, median, stack_size);
-        stack_size = ft_lstsize(*stack_a);
+            return;
+        median = calculate_median(stack_a, size);
+        extract_lower_bound(stack_a, stack_b, median, size);
+        size = ft_lstsize(*stack_a);
     }
-    if (!(sorted(stack_a)))
+    if (size == 3)
+        sort_3(stack_a);
+    if (size == 2 && !(sorted(stack_a)))
     {
-        if (stack_size == 3)
-            sort_3(stack_a);
-        if (stack_size == 2)
-        {
-            if (rev_top_two(stack_b))
-                swap_a_and_b(stack_a, stack_b);
-            else
-                swap_a(stack_a);
-        }
+        if (check_reversed_top(stack_b))
+            swap_a_and_b(stack_a, stack_b);
+        else
+            swap_a(stack_a);
     }
-    fit_back(stack_a, stack_b, max_value);
 }
 
-
-void fit_back(t_list **stack_a, t_list **stack_b, int max_value)
+void rearrange_stack_a(t_list **stack_a, t_list **stack_b, int max_value)
 {
-    t_list *iter;
+    t_list *curr;
     t_list *top_b;
     t_list *top_a;
     t_list *bottom_a;
 
-    
+    if (!stack_b || !*stack_b || !stack_a || !*stack_a)
+        return;
+
     while (*stack_b)
     {
-        iter = *stack_a;
-        top_a = iter;
-        while (iter)
-        {
-            bottom_a = iter;
-            iter = iter->next;
-        }
+        curr = *stack_a;
+        get_top_and_bottom(curr, &top_a, &bottom_a);
+        
         top_b = *stack_b;
-        if (*(int *)top_b->content > *(int *)top_a->content)
-            rotate_a(stack_a);
-        else if (*(int *)top_b->content < *(int *)bottom_a->content && *(int *)bottom_a->content != max_value)
-            reverse_rotate_a(stack_a);
-        else
-            push_a(stack_b, stack_a);     
+        if (top_b->content && top_a->content) 
+        {
+            if (*(int *)top_b->content > *(int *)top_a->content)
+                rotate_a(stack_a);
+            else if (*(int *)top_b->content < *(int *)bottom_a->content && *(int *)bottom_a->content != max_value)
+                reverse_rotate_a(stack_a);
+            else
+                push_a(stack_b, stack_a);
+        }
     }
-    
+    while (!sorted(stack_a))
+        rotate_a(stack_a);
 }
+
 
 void extract_lower_bound(t_list **stack_a, t_list **stack_b, int median, const int size)
 {
@@ -78,34 +72,54 @@ void extract_lower_bound(t_list **stack_a, t_list **stack_b, int median, const i
     t_list *top;
 
     n = size;
-    top = *stack_a;
     while (n > 0)
     {
         if(sorted(stack_a))
-            break;
+            return;
+        top = *stack_a;
         if (*(int *)top->content < median)
-        {
             push_b(stack_a, stack_b);
-        }
         else
-        {
             rotate_a(stack_a);
-        }
         n--;
     }       
 }
 
-int rev_top_two(t_list **stack)
+int	calculate_median(t_list **stack_a, int n)
 {
-    t_list *first;
-    t_list *next;
+	int		*copy_stack;
+	t_list	*current;
+	int		i;
+	int		median;
 
-    first = *stack;
-    next = first->next;
+	current = *stack_a;
+	copy_stack = malloc(sizeof(int) * n);
+	if (!copy_stack)
+		exit(EXIT_FAILURE);
+	i = 0;
+	while (current)
+	{
+		copy_stack[i] = *(int *)current->content;
+		current = current->next;
+		i++;
+	}
+	quicksort(copy_stack, 0, n - 1);
+	median = copy_stack[n / 2];
+	free(copy_stack);
+    return median;
+}
 
-    if (*(int *)first->content < *(int *)next->content)
-        return (1);
-    else
-        return (0); 
+void get_top_and_bottom(t_list *stack, t_list **top, t_list **bottom)
+{
+    *top = stack;
+    *bottom = stack;
     
+    if (!stack) 
+        return;
+
+    while (stack->next)
+    {
+        stack = stack->next;
+        *bottom = stack;
+    }
 }

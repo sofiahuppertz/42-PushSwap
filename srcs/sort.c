@@ -31,6 +31,7 @@ void    sort(t_list **stack_a, t_list **stack_b)
         sort_5(stack_a, stack_b);
     else
         median_sort(stack_a, stack_b, size);
+        rearrange_stack_a(stack_a, stack_b, get_max(stack_a));
 }
 
 int sorted(t_list **stack_a)

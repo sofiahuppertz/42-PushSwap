@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: shuppert <shuppert@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/08 15:53:32 by shuppert          #+#    #+#             */
+/*   Updated: 2023/08/08 16:55:28 by shuppert         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../push_swap.h"
 
 void    sort(t_list **stack_a, t_list **stack_b)
@@ -18,7 +30,7 @@ void    sort(t_list **stack_a, t_list **stack_b)
     else if (size == 5)
         sort_5(stack_a, stack_b);
     else
-        selection_sort(stack_a, stack_b, size);
+        median_sort(stack_a, stack_b, size);
 }
 
 int sorted(t_list **stack_a)

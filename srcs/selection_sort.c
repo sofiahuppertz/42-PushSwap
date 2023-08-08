@@ -1,7 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   selection_sort.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: shuppert <shuppert@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/08 15:53:40 by shuppert          #+#    #+#             */
+/*   Updated: 2023/08/08 15:53:42 by shuppert         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../push_swap.h"
 
 
-//TODO: break into smaller stacks
+// TODO: break into smaller stacks
+// Calculate median of stack a and send every value smaller than the median to stack b.
+// Repeat until stack a has 3 or less elements. Optimize when I can do ss(instead of rotate)
+// Find minimum cost number from stack b to stack a.
+// place it sorted to stack a.
+//Keep track of value on bottom of stack a, if it's bigger than top of stack b, rra and then pb
+//If top of stack a is smaller than top of stack b, rotate a and the pb.
 void selection_sort(t_list **stack_a, t_list **stack_b, int size)
 {
     int index_min;

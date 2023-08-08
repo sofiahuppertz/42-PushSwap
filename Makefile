@@ -1,13 +1,14 @@
 NAME = push_swap
 LIBFT = 42-Libft/libft/libft.a
 
-INCLUDE = -I./ -I./42-Libft/
+INCLUDE = -I./ -I./42-Libft/libft/
 CFLAGS = -Wall -Wextra -Werror
 
 SRC_NAMES = main.c \
 		others.c \
 		instructions.c \
-		selection_sort.c \
+		median_sort.c \
+		median_sort_helpers.c \
 		small_stack_sort.c \
 		sort.c 
 		
@@ -19,7 +20,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME) : $(LIBFT) $(OBJS)
-	cc -g $(CFLAGS) -L 42-Libft/libft/ -lft $(OBJS) -o $(NAME)
+	cc  $(CFLAGS) $(OBJS) -L42-Libft/libft -lft -o $(NAME)
 
 %.o: srcs/%.c
 	cc $(CFLAGS) $(INCLUDE) -c $< -o $@

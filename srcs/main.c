@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: shuppert <shuppert@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/08 15:54:01 by shuppert          #+#    #+#             */
+/*   Updated: 2023/08/08 15:54:04 by shuppert         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../push_swap.h"
 
 
-//TODO: check if arguments passed include only numbers.
+//TODO: PARSING: check if arguments passed include only numbers.
 //TODO: not print extra instructions when I do ss or rr or rrr.
 //Optimize the smaller sorts.
-//Make radix sort algorithm.
 int main(int argc, char *argv[])
 {
     t_list *stack_a;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   instructions.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: shuppert <shuppert@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/08 15:54:08 by shuppert          #+#    #+#             */
+/*   Updated: 2023/08/08 15:54:11 by shuppert         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 # include "../push_swap.h"
 
 //sa (swap a): Swap the first 2 elements at the top of stack a. Do nothing if there is only one or no elements.
@@ -11,6 +23,7 @@ void    swap_a(t_list **stack_a)
 
     if (!stack_a || !(*stack_a) || !(*stack_a)->next)
         return ;
+    
     first = *stack_a;
     second = first->next;
     third = second->next;
@@ -103,7 +116,7 @@ void rotate_b(t_list **stack_b)
 
     if (!stack_b || !(*stack_b) || !(*stack_b)->next)
         return ;
-        first = *stack_b;
+    first = *stack_b;
     last = first;
     while (last->next)
         last = last->next;

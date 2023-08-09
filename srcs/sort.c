@@ -12,7 +12,7 @@
 
 #include "../push_swap.h"
 
-void    sort(t_list **stack_a, t_list **stack_b)
+void    arrange_numbers(t_list **stack_a, t_list **stack_b)
 {
     int size;
 
@@ -22,7 +22,7 @@ void    sort(t_list **stack_a, t_list **stack_b)
     if (sorted(stack_a))
         return ;
     else if (size == 2)
-        swap_a(stack_a);
+        swap_a(stack_a, 1);
     else if (size == 3)
         sort_3(stack_a);
     else if (size == 4)

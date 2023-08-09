@@ -9,6 +9,7 @@ SRC_NAMES = main.c \
 		median_sort.c \
 		median_sort_helpers.c \
 		parsing.c \
+		parsing_utils.c \
 		small_stack_sort.c \
 		sort.c \
 

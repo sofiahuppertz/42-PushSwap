@@ -31,7 +31,7 @@ void    median_sort(t_list **stack_a, t_list **stack_b, int size)
         if (check_reversed_top(stack_b))
             swap_a_and_b(stack_a, stack_b);
         else
-            swap_a(stack_a);
+            swap_a(stack_a, 1);
     }
 }
 

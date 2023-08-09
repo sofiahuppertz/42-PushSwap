@@ -25,18 +25,18 @@ void sort_3(t_list **stack_a)
     if (sorted(stack_a))
         return ;
     if (*(int *)first->content > *(int *)second->content && *(int *)first->content < *(int *)third->content)
-        swap_a(stack_a);
+        swap_a(stack_a, 1);
     else if (*(int *)first->content > *(int *)second->content && *(int *)first->content > *(int *)third->content)
     {
         rotate_a(stack_a);
         if (!sorted(stack_a))
-            swap_a(stack_a);
+            swap_a(stack_a, 1);
     }
     else if (*(int *)first->content < *(int *)second->content && *(int *)first->content > *(int *)third->content)
         reverse_rotate_a(stack_a);
     else if (*(int *)first->content < *(int *)second->content && *(int *)first->content < *(int *)third->content)
     {
-        swap_a(stack_a);
+        swap_a(stack_a, 1);
         rotate_a(stack_a);
     }
 }

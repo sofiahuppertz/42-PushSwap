@@ -20,18 +20,20 @@ int main(int argc, char *argv[])
     init(argc, &stack_a, &stack_b);
     read_input(argc, argv, &stack_a);
     arrange_numbers(&stack_a, &stack_b);
+    t_list *node;
+    node = stack_a;
+    ft_printf("Stack after sorting:\n");
+    while (node)
+    {
+        ft_printf("%d\n", *(int *)node->content);
+        node = node->next;
+    }
+    ft_lstclear(&stack_a, free);
 }
 
 
-/*
-t_list *node;
-node = stack_a;
-ft_printf("Stack after sorting:\n");
-while (node)
-{
-    ft_printf("%d\n", *(int *)node->content);
-    node = node->next;
-*/
+
+
 
 
 void    init(int argc, t_list **stack_a, t_list **stack_b)

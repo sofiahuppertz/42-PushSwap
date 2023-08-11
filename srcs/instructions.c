@@ -12,9 +12,6 @@
 
 # include "../push_swap.h"
 
-//sa (swap a): Swap the first 2 elements at the top of stack a. Do nothing if there is only one or no elements.
-//sb (swap b): Swap the first 2 elements at the top of stack b. Do nothing if there is only one or no elements.
-//ss : sa and sb at the same time.
 void    swap_a(t_list **stack_a, int print)
 {
     t_list *first;
@@ -88,9 +85,7 @@ void push_b(t_list **stack_a, t_list **stack_b)
     *stack_a = second;
     ft_printf("pb\n");
 }
-//ra (rotate a): Shift up all elements of stack a by 1. The first element becomes the last one.
-// rb (rotate b): Shift up all elements of stack b by 1. The first element becomes the last one.
-// rr : ra and rb at the same time.
+
 void rotate_a(t_list **stack_a)
 {
     t_list *first;

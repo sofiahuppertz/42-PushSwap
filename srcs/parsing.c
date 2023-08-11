@@ -52,12 +52,11 @@ int build_cache_and_count(int argc, char *argv[], t_list **char_args)
 
 void fill_up_stack(t_list **args_char, t_list **head)
 {
-    int size;
     int index;
     int *num;
     char **str_array;
     t_list *current;
-    t_list *new;
+
 
     if (!args_char || !(*args_char))
         return;
@@ -66,22 +65,29 @@ void fill_up_stack(t_list **args_char, t_list **head)
     {
         index = 0;
         str_array = (char **)current->content;
-        size = str_array_length((const char **)str_array);
-        while (index < size)
+        num = NULL;
+        while (str_array[index])
         {
-            num = (int *)malloc(sizeof(int));
-            if (!num || !(is_numeric(str_array[index])))
-            {
-                ft_error(head, args_char);
-            }
-            *num = safe_atoi(str_array[index], head, args_char);
-            check_forbidden(num, head, args_char);
-            new = ft_lstnew((void *)num);
-            if (!new)
-                ft_error(head, args_char);
-            ft_lstadd_back(head, new);
+            add_number(num, str_array[index], head, args_char);
             index += 1;
         }
         current = current->next;
     }
+}
+
+void add_number(int *num, char *str_num, t_list **head, t_list **char_args)
+{
+    t_list *new;
+
+    num = (int *)malloc(sizeof(int));
+    if (!num || !(is_numeric(str_num)))
+    {
+        ft_error(head, char_args);
+    }
+    *num = safe_atoi(str_num, head, char_args);
+    check_duplicates(num, head, char_args);
+    new = ft_lstnew((void *)num);
+    if (!new)
+        ft_error(head, char_args);
+    ft_lstadd_back(head, new);
 }

@@ -30,7 +30,7 @@ int safe_atoi(char *str, t_list **head, t_list **char_args)
     return ((int)num);
 }
 
-void check_forbidden(int *num, t_list **head, t_list **char_args)
+void check_duplicates(int *num, t_list **head, t_list **char_args)
 {
     t_list *current;
 
@@ -53,10 +53,8 @@ void check_forbidden(int *num, t_list **head, t_list **char_args)
 void   ft_error(t_list **head_1, t_list **head_2)
 {
     ft_printf("Error\n");
-    if (head_1)
-        clear(head_1);
-    if (head_2)
-        clear(head_2);
+    ft_lstclear(head_1, free);
+    ft_lstclear(head_2, free);
     exit(1);
 }
 
@@ -86,14 +84,24 @@ void clear(t_list **head)
 {
     t_list *current;
     t_list *next;
+    char **temp;
+    int i;
 
     if (!head || !(*head))
         return ;
     current = *head;
     while (current)
     {
+
         next = current->next;
-        free(current->content);
+        temp = (char **)current->content;
+        i = 0;
+        while(temp[i])
+        {
+            free(temp[i]);
+            i += 1;
+        }
+        free(temp);
         free(current);
         current = next;
     }

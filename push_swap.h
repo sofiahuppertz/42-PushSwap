@@ -19,9 +19,11 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+
+void add_number(int *num, char *str_num, t_list **head, t_list **char_args);
 void	arrange_numbers(t_list **stack_a, t_list **stack_b);
 int		calculate_median(t_list **stack_a, int n);
-void check_forbidden(int *num, t_list **head, t_list **char_args);
+void check_duplicates(int *num, t_list **head, t_list **char_args);
 int		check_reversed_top(t_list **stack);
 void	clear(t_list **head);
 void	extract_lower_bound(t_list **stack_a, t_list **stack_b, int median,

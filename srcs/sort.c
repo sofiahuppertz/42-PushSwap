@@ -6,7 +6,7 @@
 /*   By: shuppert <shuppert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:53:32 by shuppert          #+#    #+#             */
-/*   Updated: 2023/08/08 16:55:28 by shuppert         ###   ########.fr       */
+/*   Updated: 2023/08/28 12:41:16 by shuppert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,11 @@ void    arrange_numbers(t_list **stack_a, t_list **stack_b)
     else if (size == 5)
         sort_5(stack_a, stack_b);
     else
+    {
         median_sort(stack_a, stack_b, size);
-        rearrange_stack_a(stack_a, stack_b, get_max(stack_a));
+        rearrange_stack_a(stack_a, stack_b, get_max(stack_a));        
+    }
+
 }
 
 int sorted(t_list **stack_a)

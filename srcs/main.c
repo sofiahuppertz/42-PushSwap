@@ -6,7 +6,7 @@
 /*   By: shuppert <shuppert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:54:01 by shuppert          #+#    #+#             */
-/*   Updated: 2023/08/08 15:54:04 by shuppert         ###   ########.fr       */
+/*   Updated: 2023/08/28 16:41:06 by shuppert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,9 @@ int main(int argc, char *argv[])
     arrange_numbers(&stack_a, &stack_b);
     t_list *node;
     node = stack_a;
-    ft_printf("Stack after sorting:\n");
-    while (node)
-    {
-        ft_printf("%d\n", *(int *)node->content);
-        node = node->next;
-    }
+
     ft_lstclear(&stack_a, free);
 }
-
-
-
-
-
 
 void    init(int argc, t_list **stack_a, t_list **stack_b)
 {

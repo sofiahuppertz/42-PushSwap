@@ -101,7 +101,7 @@ void rotate_a(t_data **stack_a)
     last->next = first;
     *stack_a = first->next;
     first->next = NULL;
-    ft_printf("ra\n");
+    write(1,"ra\n", 3);
 }
 
 void reverse_rotate_a(t_data **stack_a)
@@ -122,6 +122,6 @@ void reverse_rotate_a(t_data **stack_a)
     last->next = *stack_a;
     *stack_a = last;
     previous->next = NULL;
-    ft_printf("rra\n");
+    write(1,"rra\n", 4);
 }
 

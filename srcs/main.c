@@ -17,18 +17,11 @@ int main(int argc, char *argv[])
     t_data *stack_a;
     t_data *stack_b;
 
-    init(argc, &stack_a, &stack_b);
+    if  (argc < 2)
+        exit(0);
+    stack_a = NULL;
+    stack_b = NULL;
     parse(argc, argv, &stack_a);
     push_swap(&stack_a, &stack_b);
     delete_lst(&stack_a, free);
 }
-
-void    init(int argc, t_data **stack_a, t_data **stack_b)
-{
-    if  (argc < 2)
-        exit(0);
-    *stack_a = NULL;
-    *stack_b = NULL;
-}
-
-

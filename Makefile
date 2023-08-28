@@ -4,15 +4,15 @@ LIBFT = 42-Libft/libft/libft.a
 INCLUDE = -I./ -I./42-Libft/libft/
 CFLAGS = -Wall -Wextra -Werror -g3
 
-SRC_NAMES = main.c \
-		instructions.c \
+SRC_NAMES = cosmic_sort.c \
+		cosmic_sort_helpers.c \
+		main.c \
 		list_handlers.c \
-		median_sort.c \
-		median_sort_helpers.c \
 		parsing.c \
 		parsing_utils.c \
-		small_stack_sort.c \
-		sort.c \
+		planet_sort.c \
+		push_swap.c \
+		tools.c \
 
 SRCS = $(addprefix srcs/, $(SRC_NAMES))
 OBJS = $(SRCS:.c=.o)

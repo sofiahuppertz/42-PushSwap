@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   others.c                                           :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shuppert <shuppert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:53:46 by shuppert          #+#    #+#             */
-/*   Updated: 2023/08/08 15:53:49 by shuppert         ###   ########.fr       */
+/*   Updated: 2023/08/28 18:50:25 by shuppert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@ int build_cache_and_count(int argc, char *argv[], t_list **char_args)
         node = ft_lstnew((void *)temp);
         if(!node)
         {
+            i = -1;
+            while (temp[++i])
+                free(temp[i]);
+            free(temp);
             ft_error(char_args, NULL);
         }
         ft_lstadd_back(char_args, node);

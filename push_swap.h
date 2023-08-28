@@ -6,7 +6,7 @@
 /*   By: shuppert <shuppert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:53:24 by shuppert          #+#    #+#             */
-/*   Updated: 2023/08/08 16:50:38 by shuppert         ###   ########.fr       */
+/*   Updated: 2023/08/28 19:01:33 by shuppert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,23 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+/* typedef struct s_list
+{
+	void			*content;
+	struct s_list	*next;
+	int index;
+	int pos_a; 
+	int pos_b; 
+	int cout;
+	// index est la position finale de la valeur dans la pile triee
+	// ou est la valeur est actuellement dans B
+	// ou est la valeur associee dans A a la valeur presente dans B
+	// par rapport au milieu des piles (ra rra)
+	// cout est le calcul des valeurs relatives entre la posA et posB
+	
+}					t_list; */
+
+//combien de instructions pour deplacer pos a et pos b en haut de leurs stacks + 1 (push_a), et en supprimant les repetitions car rr ou rrr.
 
 void add_number(int *num, char *str_num, t_list **head, t_list **char_args);
 void	arrange_numbers(t_list **stack_a, t_list **stack_b);
@@ -56,3 +73,6 @@ void	reverse_rotate_a(t_list **stack_a);
 int		sorted(t_list **stack_a);
 
 #endif
+
+
+//todo: faire le menage

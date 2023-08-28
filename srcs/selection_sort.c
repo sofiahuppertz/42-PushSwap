@@ -6,7 +6,7 @@
 /*   By: shuppert <shuppert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:53:40 by shuppert          #+#    #+#             */
-/*   Updated: 2023/08/08 15:53:42 by shuppert         ###   ########.fr       */
+/*   Updated: 2023/08/28 17:16:37 by shuppert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void selection_sort(t_list **stack_a, t_list **stack_b, int size)
         {
             if (index_min == 1)
             {
-                swap_a(stack_a);
+                swap_a(stack_a, 1);
             }
             else
             {

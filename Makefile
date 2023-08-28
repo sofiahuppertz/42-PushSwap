@@ -2,7 +2,7 @@ NAME = push_swap
 LIBFT = 42-Libft/libft/libft.a
 
 INCLUDE = -I./ -I./42-Libft/libft/
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3
 
 SRC_NAMES = main.c \
 		instructions.c \

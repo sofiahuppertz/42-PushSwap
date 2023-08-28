@@ -20,7 +20,7 @@
 // place it sorted to stack a.
 //Keep track of value on bottom of stack a, if it's bigger than top of stack b, rra and then pb
 //If top of stack a is smaller than top of stack b, rotate a and the pb.
-void selection_sort(t_list **stack_a, t_list **stack_b, int size)
+void selection_sort(t_data **stack_a, t_data **stack_b, int size)
 {
     int index_min;
     int i;
@@ -31,7 +31,7 @@ void selection_sort(t_list **stack_a, t_list **stack_b, int size)
     {
         if (sorted(stack_a))
             break ;
-        index_min = find_min(stack_a);
+        index_min = get_min_idx(stack_a);
         if (index_min <= i / 2)
         {
             if (index_min == 1)
@@ -40,7 +40,7 @@ void selection_sort(t_list **stack_a, t_list **stack_b, int size)
             }
             else
             {
-                while (find_min(stack_a) > 0)
+                while (get_min_idx(stack_a) > 0)
                 {
                     rotate_a(stack_a);
                 }
@@ -48,7 +48,7 @@ void selection_sort(t_list **stack_a, t_list **stack_b, int size)
         }
         else if (index_min > i / 2)
         {
-            while (find_min(stack_a) > 0)
+            while (get_min_idx(stack_a) > 0)
             {
                 reverse_rotate_a(stack_a);
             }

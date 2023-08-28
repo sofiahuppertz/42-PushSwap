@@ -14,19 +14,16 @@
 
 int main(int argc, char *argv[])
 {
-    t_list *stack_a;
-    t_list *stack_b;
+    t_data *stack_a;
+    t_data *stack_b;
 
     init(argc, &stack_a, &stack_b);
-    read_input(argc, argv, &stack_a);
-    arrange_numbers(&stack_a, &stack_b);
-    t_list *node;
-    node = stack_a;
-
-    ft_lstclear(&stack_a, free);
+    parse(argc, argv, &stack_a);
+    push_swap(&stack_a, &stack_b);
+    delete_lst(&stack_a, free);
 }
 
-void    init(int argc, t_list **stack_a, t_list **stack_b)
+void    init(int argc, t_data **stack_a, t_data **stack_b)
 {
     if  (argc < 2)
         exit(0);

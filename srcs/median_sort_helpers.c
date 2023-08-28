@@ -13,10 +13,10 @@
 #include "../push_swap.h"
 
 
-int check_reversed_top(t_list **stack)
+int check_reversed_top(t_data **stack)
 {
-    t_list *first;
-    t_list *next;
+    t_data *first;
+    t_data *next;
 
     if (!stack || !(*stack) || !(*stack)->next)
         return (0);
@@ -28,9 +28,9 @@ int check_reversed_top(t_list **stack)
         return (0);     
 }
 
-int	get_max(t_list **stack)
+int	get_max(t_data **stack)
 {
-	t_list *current;
+	t_data *current;
 	int max;
 
 	current = *stack;

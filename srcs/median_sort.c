@@ -12,7 +12,7 @@
 
 #include "../push_swap.h"
 
-void	median_sort(t_list **stack_a, t_list **stack_b, int size)
+void	median_sort(t_data **stack_a, t_data **stack_b, int size)
 {
 	int	median;
 
@@ -22,10 +22,10 @@ void	median_sort(t_list **stack_a, t_list **stack_b, int size)
 			return ;
 		median = calculate_median(stack_a, size);
 		extract_lower_bound(stack_a, stack_b, median, size);
-		size = ft_lstsize(*stack_a);
+		size = get_size(*stack_a);
 	}
 	if (size == 3)
-		sort_3(stack_a);
+		trio_sort(stack_a);
 	if (size == 2 && !(sorted(stack_a)))
 	{
 		if (check_reversed_top(stack_b))
@@ -35,12 +35,12 @@ void	median_sort(t_list **stack_a, t_list **stack_b, int size)
 	}
 }
 
-void	rearrange_stack_a(t_list **stack_a, t_list **stack_b, int max_value)
+void	rearrange_stack_a(t_data **stack_a, t_data **stack_b, int max_value)
 {
-	t_list	*curr;
-	t_list	*top_b;
-	t_list	*top_a;
-	t_list	*bottom_a;
+	t_data	*curr;
+	t_data	*top_b;
+	t_data	*top_a;
+	t_data	*bottom_a;
 
 	if (!stack_b || !*stack_b || !stack_a || !*stack_a)
 		return ;
@@ -64,11 +64,11 @@ void	rearrange_stack_a(t_list **stack_a, t_list **stack_b, int max_value)
 		rotate_a(stack_a);
 }
 
-void	extract_lower_bound(t_list **stack_a, t_list **stack_b, int median,
+void	extract_lower_bound(t_data **stack_a, t_data **stack_b, int median,
 		const int size)
 {
 	int		n;
-	t_list	*top;
+	t_data	*top;
 
 	n = size;
 	while (n > 0)
@@ -85,10 +85,10 @@ void	extract_lower_bound(t_list **stack_a, t_list **stack_b, int median,
 }
 
 
-int	calculate_median(t_list **stack_a, int n)
+int	calculate_median(t_data **stack_a, int n)
 {
 	int		*copy_stack;
-	t_list	*current;
+	t_data	*current;
 	int		i;
 	int		median;
 
@@ -109,7 +109,7 @@ int	calculate_median(t_list **stack_a, int n)
 	return (median);
 }
 
-void	get_top_and_bottom(t_list *stack, t_list **top, t_list **bottom)
+void	get_top_and_bottom(t_data *stack, t_data **top, t_data **bottom)
 {
 	*top = stack;
 	*bottom = stack;

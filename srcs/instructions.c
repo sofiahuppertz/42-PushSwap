@@ -12,11 +12,11 @@
 
 # include "../push_swap.h"
 
-void    swap_a(t_list **stack_a, int print)
+void    swap_a(t_data **stack_a, int print)
 {
-    t_list *first;
-    t_list *second;
-    t_list *third;
+    t_data *first;
+    t_data *second;
+    t_data *third;
 
     if (!stack_a || !(*stack_a) || !(*stack_a)->next)
         return ;
@@ -31,11 +31,11 @@ void    swap_a(t_list **stack_a, int print)
         ft_printf("sa\n");
 }
 
-void swap_b(t_list **stack_b, int print)
+void swap_b(t_data **stack_b, int print)
 {
-    t_list *first;
-    t_list *second;
-    t_list *third;
+    t_data *first;
+    t_data *second;
+    t_data *third;
 
     if (!stack_b || !(*stack_b) || !(*stack_b)->next)
         return ;
@@ -49,17 +49,17 @@ void swap_b(t_list **stack_b, int print)
         ft_printf("sb\n");
 }
 
-void    swap_a_and_b(t_list **stack_a, t_list **stack_b)
+void    swap_a_and_b(t_data **stack_a, t_data **stack_b)
 {
     swap_a(stack_a, 0);
     swap_b(stack_b, 0);
     ft_printf("ss\n");
 }
 
-void push_a(t_list **stack_b, t_list **stack_a)
+void push_a(t_data **stack_b, t_data **stack_a)
 {
-    t_list *first;
-    t_list *second;
+    t_data *first;
+    t_data *second;
 
     if (!stack_b || !(*stack_b))
         return ;
@@ -71,10 +71,10 @@ void push_a(t_list **stack_b, t_list **stack_a)
     ft_printf("pa\n");
 }
 
-void push_b(t_list **stack_a, t_list **stack_b)
+void push_b(t_data **stack_a, t_data **stack_b)
 {
-    t_list *first;
-    t_list *second;
+    t_data *first;
+    t_data *second;
 
     if (!stack_a || !(*stack_a))
         return ;
@@ -86,10 +86,10 @@ void push_b(t_list **stack_a, t_list **stack_b)
     ft_printf("pb\n");
 }
 
-void rotate_a(t_list **stack_a)
+void rotate_a(t_data **stack_a)
 {
-    t_list *first;
-    t_list *last;
+    t_data *first;
+    t_data *last;
 
     if (!stack_a || !(*stack_a) || !(*stack_a)->next)
         return ;
@@ -104,10 +104,10 @@ void rotate_a(t_list **stack_a)
     ft_printf("ra\n");
 }
 
-void reverse_rotate_a(t_list **stack_a)
+void reverse_rotate_a(t_data **stack_a)
 {
-    t_list *previous;
-    t_list *last;
+    t_data *previous;
+    t_data *last;
 
     if (!stack_a || !(*stack_a) || !(*stack_a)->next)
         return ;

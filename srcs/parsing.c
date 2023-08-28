@@ -12,86 +12,50 @@
 
 #include "../push_swap.h"
 
-int read_input(int argc, char *argv[], t_list **stack)
+void parse(int argc, char *argv[], t_data **stack)
 {
-    int total_numbers;
-    t_list *cache;
-
-    cache = NULL;
-    total_numbers = build_cache_and_count(argc, argv, &cache);
-    if (total_numbers <= 0)
-        exit(0);
-    fill_up_stack(&cache, stack);
-    clear(&cache);
-    return (total_numbers);
-}
-
-int build_cache_and_count(int argc, char *argv[], t_list **char_args)
-{
-    t_list *node;
     char **temp;
-    int size;
+    int *num;
     int i;
+    int j;
 
-    size = 0;
+
+    if (!stack)
+        error(stack);
     i = 1;
+    num = NULL;
     while (i < argc)
     {
         temp = ft_split((const char *)argv[i], ' ');
-        size += str_array_length((const char **)temp);
-        node = ft_lstnew((void *)temp);
-        if(!node)
+        j = 0;
+        while (temp[j])
         {
-            i = -1;
-            while (temp[++i])
-                free(temp[i]);
-            free(temp);
-            ft_error(char_args, NULL);
+            insert_num(num, temp[j], stack);
+            j += 1;
         }
-        ft_lstadd_back(char_args, node);
+        delete_str_arr(temp);           
         i += 1;
     }
-    return (size);
 }
 
-void fill_up_stack(t_list **args_char, t_list **head)
+void insert_num(int *num, char *temp, t_data **stack)
 {
-    int index;
-    int *num;
-    char **str_array;
-    t_list *current;
-
-
-    if (!args_char || !(*args_char))
-        return;
-    current = *args_char;
-    while (current)
-    {
-        index = 0;
-        str_array = (char **)current->content;
-        num = NULL;
-        while (str_array[index])
-        {
-            add_number(num, str_array[index], head, args_char);
-            index += 1;
-        }
-        current = current->next;
-    }
-}
-
-void add_number(int *num, char *str_num, t_list **head, t_list **char_args)
-{
-    t_list *new;
+    t_data *new;
 
     num = (int *)malloc(sizeof(int));
-    if (!num || !(is_numeric(str_num)))
+    if (!num)
+        error(stack);
+    if (!is_numeric(temp))
     {
-        ft_error(head, char_args);
+        free(num);
+        error(stack);
     }
-    *num = safe_atoi(str_num, head, char_args);
-    check_duplicates(num, head, char_args);
-    new = ft_lstnew((void *)num);
+    *num = safe_atoi(temp, stack);
+    check_duplicates(num, stack);
+    new = create_node((void *)num);
     if (!new)
-        ft_error(head, char_args);
-    ft_lstadd_back(head, new);
+        error(stack);
+    insert_node(stack, new);
 }
+
+

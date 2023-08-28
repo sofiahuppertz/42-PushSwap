@@ -13,11 +13,11 @@
 #include "../push_swap.h"
 
 
-void sort_3(t_list **stack_a)
+void trio_sort(t_data **stack_a)
 {
-    t_list *first;
-    t_list *second;
-    t_list *third;
+    t_data *first;
+    t_data *second;
+    t_data *third;
 
     first = *stack_a;
     second = first->next;
@@ -41,12 +41,12 @@ void sort_3(t_list **stack_a)
     }
 }
 
-void    sort_4(t_list **stack_a, t_list **stack_b)
+void    quartet_sort(t_data **stack_a, t_data **stack_b)
 {
     //push smallest to stack_b
-    if (find_min(stack_a) < 2)
+    if (get_min_idx(stack_a) < 2)
     {
-        while (find_min(stack_a) != 0)
+        while (get_min_idx(stack_a) != 0)
         {
             rotate_a(stack_a);
         }
@@ -54,7 +54,7 @@ void    sort_4(t_list **stack_a, t_list **stack_b)
     }
     else
     {
-        while (find_min(stack_a) != 0)
+        while (get_min_idx(stack_a) != 0)
         {
             reverse_rotate_a(stack_a);
         }
@@ -62,24 +62,24 @@ void    sort_4(t_list **stack_a, t_list **stack_b)
     }
     push_b(stack_a, stack_b);
     //sort stack a with 3 elements
-    sort_3(stack_a);
+    trio_sort(stack_a);
     //push smallest back to stack_a
     push_a(stack_b, stack_a);
 }
 
-void sort_5(t_list **stack_a, t_list **stack_b)
+void quintet_sort(t_data **stack_a, t_data **stack_b)
 {
-    if (find_min(stack_a) < 2)
+    if (get_min_idx(stack_a) < 2)
     {
-        while (find_min(stack_a) != 0)
+        while (get_min_idx(stack_a) != 0)
             rotate_a(stack_a);
     }
     else
     {
-        while (find_min(stack_a) != 0)
+        while (get_min_idx(stack_a) != 0)
             reverse_rotate_a(stack_a);
     }
     push_b(stack_a, stack_b);
-    sort_4(stack_a, stack_b);
+    quartet_sort(stack_a, stack_b);
     push_a(stack_b, stack_a);
 }

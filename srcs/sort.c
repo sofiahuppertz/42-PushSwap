@@ -12,23 +12,23 @@
 
 #include "../push_swap.h"
 
-void    arrange_numbers(t_list **stack_a, t_list **stack_b)
+void    push_swap(t_data **stack_a, t_data **stack_b)
 {
     int size;
 
     if (!stack_a || !(*stack_a) || !(*stack_a)->next)
         return ;
-    size = ft_lstsize(*stack_a);
+    size = get_size(*stack_a);
     if (sorted(stack_a))
         return ;
     else if (size == 2)
         swap_a(stack_a, 1);
     else if (size == 3)
-        sort_3(stack_a);
+        trio_sort(stack_a);
     else if (size == 4)
-        sort_4(stack_a, stack_b);
+        quartet_sort(stack_a, stack_b);
     else if (size == 5)
-        sort_5(stack_a, stack_b);
+        quintet_sort(stack_a, stack_b);
     else
     {
         median_sort(stack_a, stack_b, size);
@@ -37,9 +37,9 @@ void    arrange_numbers(t_list **stack_a, t_list **stack_b)
 
 }
 
-int sorted(t_list **stack_a)
+int sorted(t_data **stack_a)
 {
-    t_list *ptr;
+    t_data *ptr;
     
     if (!stack_a || !(*stack_a) || !(*stack_a)->next)
         return (0);
@@ -53,9 +53,9 @@ int sorted(t_list **stack_a)
     return (1);
 }
 
-int find_min(t_list **stack_a)
+int get_min_idx(t_data **stack_a)
 {
-    t_list *ptr;
+    t_data *ptr;
     int min;
     int index;
     int index_min;

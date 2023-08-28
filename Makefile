@@ -6,6 +6,7 @@ CFLAGS = -Wall -Wextra -Werror -g3
 
 SRC_NAMES = main.c \
 		instructions.c \
+		list_handlers.c \
 		median_sort.c \
 		median_sort_helpers.c \
 		parsing.c \

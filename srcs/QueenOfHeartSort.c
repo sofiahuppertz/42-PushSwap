@@ -12,25 +12,327 @@
 
 #include "../push_swap.h"
 
-void	gigantous_sort(t_data **stack_a, t_data **stack_b, int size)
+void	big_sort(t_data **stack_a, t_data **stack_b, int size)
 {
-	insert_final_idx(stack_a);
-	group_by_median(stack_a, stack_b, size);
-	//at this time everything in stack a is bigger than anything in stack b.
-	minimum_cost_sort(stack_a, stack_b, size);
+	int *sorted_copy;
+	int quantile_bounds[5];
+	int i;
+
+	sorted_copy = NULL;
+	sort_copy(stack_a, stack_b, sorted_copy, size);
+	insert_idx(stack_b, sorted_copy, size);
+	calculate_quantile_bounds(quantile_bounds, sorted_copy, size);
+	i = 0;
+	while (i < 5)
+	{
+		extract_per_bound(stack_a, stack_b, quantile_bounds[i], size);
+		i++;
+	}
+	minimum_cost_sort(stack_a, stack_b);
+
+	free(sorted_copy);
 }
 
-void	group_by_median(t_data **stack_a, t_data **stack_b, int size)
+void calculate_quantile_bounds(int quantile_bounds[5], int *sorted_copy, int size)
 {
-	int	median;
+	int quantile;
+	int i;
 
-	while (size > 3)
+	i = 1;
+	while (i < 6)
+	{
+		quantile = (size -1) * (i / 5);
+		quantile_bounds[i - 1] = sorted_copy[quantile];
+		i++;
+	}
+}
+
+
+void sort_copy(t_data **stack_a, t_data **stack_b, int *sorted_copy, int size)
+{
+	t_data	*current;
+	int i;
+	
+	i = 0;
+	sorted_copy = malloc(sizeof(int) * size);
+	if (!sorted_copy)
+	{
+		delete_lst(stack_a, free);
+		delete_lst(stack_b, free);
+		exit(1);
+	}
+		current = *stack_b;
+	while (current)
+	{
+		sorted_copy[i] = *(int *)current->content;
+		current = current->next;
+		i += 1;
+	}
+	quicksort(sorted_copy, 0, size - 1);
+}
+
+void insert_idx(t_data **stack_b, int *sorted, int size)
+{
+	t_data	*current;
+	int i;
+
+	current = *stack_b;
+	while (current)
+	{
+		i = 0;
+		while (i < size)
+		{
+			if (*(int *)current->content == sorted[i])
+			{
+				current->id = i;
+				break ;
+			}
+			i++;
+		}
+		current = current->next;
+	}
+}
+
+void	minimum_cost_sort(t_data **stack_a, t_data **stack_b)
+{
+	t_data	*current;
+	t_data	*min_cost_value;
+
+	while (*stack_a)
+	{
+		current = *stack_b;
+		min_cost_value = current;
+		min_cost_value->cost = calculate_cost(min_cost_value, *stack_a, *stack_b);
+		while (current)
+		{
+			set_info(current, stack_a, stack_b);
+			current->cost = calculate_cost(current, *stack_a, *stack_b);
+			if (current->cost < min_cost_value->cost)
+				min_cost_value = current;
+			current = current->next;
+		}
+		do_cheapest_move(stack_a, stack_b, min_cost_value);
+	}
+}
+
+void do_cheapest_move(t_data **stack_a, t_data **stack_b, t_data *min_cost_value)
+{
+	int size_a;
+	int size_b;
+	int cost_a;
+	int cost_b;
+
+	size_a = get_size(*stack_a);
+	size_b = get_size(*stack_b);
+
+	if (min_cost_value->pos < size_b / 2)
+	{
+		cost_b = -(size_b - min_cost_value->pos);
+	}
+	else
+	{
+		cost_b = size_b - min_cost_value->pos;
+	}
+	if (min_cost_value->assoc_pos < size_a / 2)
+		cost_a = -(size_a - min_cost_value->assoc_pos);
+	else
+		cost_a = size_a - min_cost_value->assoc_pos;
+	
+
+	int i = 0;
+	if (cost_b < 0 && cost_b < 0)
+	{
+		if (cost_a < cost_b)
+		{
+			while (i < -(cost_b))
+			{
+				reverse_rotate_a_and_b(stack_a, stack_b);
+				i += 1;
+			}
+			while (i < cost_a)
+			{
+				reverse_rotate_a(stack_a, 1);
+				i += 1;
+			}
+			push_a(stack_b, stack_a);	
+		}
+		else
+		{
+			while (i < -(cost_a))
+			{
+				reverse_rotate_a_and_b(stack_a, stack_b);
+				i += 1;
+			}
+			while (i < cost_b)
+			{
+				reverse_rotate_b(stack_a, 1);
+				i += 1;
+			}
+			push_a(stack_b, stack_a);	
+		}
+			
+	} 
+	else if (cost_b > 0 && cost_b > 0)
+	{
+		if (cost_a > cost_b)
+		{
+			while (i < cost_b)
+			{
+				rotate_a_and_b(stack_a, stack_b);
+				i += 1;
+			}
+			while (i < cost_a)
+			{
+				rotate_a(stack_a, 1);
+				i += 1;
+			}
+			push_a(stack_b, stack_a);	
+		}
+		else
+		{
+			while (i < cost_a)
+			{
+				rotate_a_and_b(stack_a, stack_b);
+				i += 1;
+			}
+			while (i < cost_b)
+			{
+				rotate_b(stack_a, 1);
+				i += 1;
+			}
+			push_a(stack_b, stack_a);
+		}
+	}
+	else
+	{
+		if (cost_a < 0)
+		{
+			while (i < -(cost_a))
+			{
+				reverse_rotate_a(stack_a, 1);
+				i += 1;
+			}
+		}
+		else
+		{
+			while (i < cost_a)
+			{
+				rotate_a(stack_a, 1);
+				i += 1;
+			}
+		}
+		i = 0;
+		if (cost_b < 0)
+		{
+			while (i < -(cost_b))
+			{
+				reverse_rotate_b(stack_b, 1);
+				i += 1;
+			}
+		}
+		else 
+		{
+			while (i < cost_b)
+			{
+				rotate_b(stack_b, 1);
+				i += 1;
+			}
+		}
+		push_a(stack_b, stack_a);
+	}
+
+}
+
+int calculate_cost(t_data *current, t_data *stack_a, t_data  *stack_b)
+{
+	int cost;
+	int cost_b;
+	int cost_a;
+	int size_a;
+	int size_b;
+
+	size_a = get_size(stack_a);
+	size_b = get_size(stack_b);
+
+	if (current->pos < size_b / 2)
+		cost_b = -(size_b - current->pos);
+	else
+		cost_b = size_b - current->pos;
+	
+	if (current->assoc_pos < size_a / 2)
+		cost_a = -(size_a - current->assoc_pos);
+	else
+		cost_a = size_a - current->assoc_pos;
+	if (cost_b < 0 && cost_b < 0)
+		cost = cost_b > cost_a ? cost_a : cost_b; //smalles is biggest in negatives
+	else if (cost_b > 0 && cost_b > 0)
+		cost = cost_b < cost_a ? cost_a : cost_b;
+	else
+		cost = abs(cost_a) + abs(cost_b);
+	return (cost + 1); //+1 for the pa.
+}
+
+void set_info(t_data *current, t_data **stack_a, t_data **stack_b)
+{
+	int i;
+	int j;
+	t_data *ptr;
+	t_data *first_b;
+
+	ptr = *stack_a;
+	i = 0;
+	while (ptr)
+	{
+		if (ptr->id == current->id)
+		{
+			current->pos = i;
+			break ;
+		}
+		i++;
+		ptr = ptr->next;
+	}
+	current->assoc_pos = -1;
+	first_b = *stack_b;
+	ptr = *stack_b;
+	j = 0;
+	while (ptr)
+	{
+		if (ptr->id < current->id)
+		{
+			if (ptr->next->id > current->id)	
+			{
+				current->assoc_pos = j + 1;
+				break ;
+			}
+			else if (ptr->next == NULL && first_b->id > current->id)
+			{
+				current->assoc_pos = 1;
+				break ;
+			}
+			ptr = ptr->next;
+			j++;
+		}	
+	}
+	if (current->assoc_pos == -1)
+		current->assoc_pos = get_min_idx(stack_b);
+}
+
+void	extract_per_bound(t_data **stack_a, t_data **stack_b, int bound, int size)
+{
+	int		n;
+	t_data	*top;
+
+	n = size;
+	while (n > 3)
 	{
 		if (sorted(stack_a))
 			return ;
-		median = calculate_median(stack_a, size);
-		extract_lower_bound(stack_a, stack_b, median, (const int)size);
-		size = get_size(*stack_a);
+		top = *stack_a;
+		if (*(int *)top->content < bound)
+			push_b(stack_a, stack_b);
+		else
+			rotate_a(stack_a, 1);
+		n--;
 	}
 	if (size == 3)
 		trio_sort(stack_a);
@@ -43,76 +345,4 @@ void	group_by_median(t_data **stack_a, t_data **stack_b, int size)
 	}
 }
 
-// index est la position finale de la valeur dans la pile triee
-// ou est la valeur est actuellement dans B
-// ou est la valeur associee dans A a la valeur presente dans B
-// par rapport au milieu des piles (ra rra)
-// cout est le calcul des valeurs relatives entre la posA et posB
-//combien de instructions pour deplacer pos a et pos b en haut de leurs stacks
-// 1 (push_a), et en supprimant les repetitions car rr ou rrr
-void	minimum_cost_sort(t_data **stack_a, t_data **stack_b, int size)
-{
-	t_data	*current;
-	t_data	*min_cost_value;
 
-	while (*stack_a)
-	{
-		current = *stack_b;
-		min_cost_value = current; //the minimum movements is 1 and that is pa
-		min_cost_value->cost = calculate_cost(min_cost_value);
-		while (current)
-		{
-			current->cost = calculate_cost(current);
-			if (current->cost < min_cost_value->cost)
-				min_cost_value = current;
-			current = current->next;
-		}
-		send_mcv(stack_a, stack_b, min_cost_value);
-	}
-}
-
-int calculate_cost()
-
-void	extract_lower_bound(t_data **stack_a, t_data **stack_b, int median, int size)
-{
-	int		n;
-	t_data	*top;
-
-	n = size;
-	while (n > 0)
-	{
-		if (sorted(stack_a))
-			return ;
-		top = *stack_a;
-		if (*(int *)top->content < median)
-			push_b(stack_a, stack_b);
-		else
-			rotate_a(stack_a);
-		n--;
-	}	
-}
-
-
-int	calculate_median(t_data **stack_a, int n)
-{
-	int		*copy_stack;
-	t_data	*current;
-	int		i;
-	int		median;
-
-	current = *stack_a;
-	copy_stack = malloc(sizeof(int) * n);
-	if (!copy_stack)
-		exit(EXIT_FAILURE);
-	i = 0;
-	while (current)
-	{
-		copy_stack[i] = *(int *)current->content;
-		current = current->next;
-		i++;
-	}
-	quicksort(copy_stack, 0, n - 1);
-	median = copy_stack[n / 2];
-	free(copy_stack);
-	return (median);
-}

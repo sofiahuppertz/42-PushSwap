@@ -1,2 +1,2 @@
 # 42-PushSwap
-Sotring Algorithms and Time Complexity.
+Sorting Algorithms and Time Complexity.

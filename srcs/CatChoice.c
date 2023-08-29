@@ -30,7 +30,7 @@ void	push_swap(t_data **stack_a, t_data **stack_b)
 	else if (size == 5)
 		quintet_sort(stack_a, stack_b);
 	else
-		gigantous_sort(stack_a, stack_b, size);
+		big_sort(stack_a, stack_b, size);
 }
 
 int	sorted(t_data **stack_a)

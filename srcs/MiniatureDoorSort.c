@@ -28,16 +28,16 @@ void trio_sort(t_data **stack_a)
         swap_a(stack_a, 1);
     else if (*(int *)first->content > *(int *)second->content && *(int *)first->content > *(int *)third->content)
     {
-        rotate_a(stack_a);
+        rotate_a(stack_a, 1);
         if (!sorted(stack_a))
             swap_a(stack_a, 1);
     }
     else if (*(int *)first->content < *(int *)second->content && *(int *)first->content > *(int *)third->content)
-        reverse_rotate_a(stack_a);
+        reverse_rotate_a(stack_a, 1);
     else if (*(int *)first->content < *(int *)second->content && *(int *)first->content < *(int *)third->content)
     {
         swap_a(stack_a, 1);
-        rotate_a(stack_a);
+        rotate_a(stack_a, 1);
     }
 }
 
@@ -48,7 +48,7 @@ void    quartet_sort(t_data **stack_a, t_data **stack_b)
     {
         while (get_min_idx(stack_a) != 0)
         {
-            rotate_a(stack_a);
+            rotate_a(stack_a, 1);
         }
             
     }
@@ -56,7 +56,7 @@ void    quartet_sort(t_data **stack_a, t_data **stack_b)
     {
         while (get_min_idx(stack_a) != 0)
         {
-            reverse_rotate_a(stack_a);
+            reverse_rotate_a(stack_a, 1);
         }
             
     }
@@ -72,12 +72,12 @@ void quintet_sort(t_data **stack_a, t_data **stack_b)
     if (get_min_idx(stack_a) < 2)
     {
         while (get_min_idx(stack_a) != 0)
-            rotate_a(stack_a);
+            rotate_a(stack_a, 1);
     }
     else
     {
         while (get_min_idx(stack_a) != 0)
-            reverse_rotate_a(stack_a);
+            reverse_rotate_a(stack_a, 1);
     }
     push_b(stack_a, stack_b);
     quartet_sort(stack_a, stack_b);

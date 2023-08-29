@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   median_sort.c                                      :+:      :+:    :+:   */
+/*   QueenOfHeartSort.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shuppert <shuppert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:53:52 by shuppert          #+#    #+#             */
-/*   Updated: 2023/08/28 17:38:22 by shuppert         ###   ########.fr       */
+/*   Updated: 2023/08/29 13:16:39 by shuppert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	median_sort(t_data **stack_a, t_data **stack_b, int size)
+void	gigantous_sort(t_data **stack_a, t_data **stack_b, int size)
+{
+	insert_final_idx(stack_a);
+	group_by_median(stack_a, stack_b, size);
+	//at this time everything in stack a is bigger than anything in stack b.
+	minimum_cost_sort(stack_a, stack_b, size);
+}
+
+void	group_by_median(t_data **stack_a, t_data **stack_b, int size)
 {
 	int	median;
 
@@ -21,7 +29,7 @@ void	median_sort(t_data **stack_a, t_data **stack_b, int size)
 		if (sorted(stack_a))
 			return ;
 		median = calculate_median(stack_a, size);
-		extract_lower_bound(stack_a, stack_b, median, size);
+		extract_lower_bound(stack_a, stack_b, median, (const int)size);
 		size = get_size(*stack_a);
 	}
 	if (size == 3)
@@ -35,37 +43,37 @@ void	median_sort(t_data **stack_a, t_data **stack_b, int size)
 	}
 }
 
-void	rearrange_stack_a(t_data **stack_a, t_data **stack_b, int max_value)
+// index est la position finale de la valeur dans la pile triee
+// ou est la valeur est actuellement dans B
+// ou est la valeur associee dans A a la valeur presente dans B
+// par rapport au milieu des piles (ra rra)
+// cout est le calcul des valeurs relatives entre la posA et posB
+//combien de instructions pour deplacer pos a et pos b en haut de leurs stacks
+// 1 (push_a), et en supprimant les repetitions car rr ou rrr
+void	minimum_cost_sort(t_data **stack_a, t_data **stack_b, int size)
 {
-	t_data	*curr;
-	t_data	*top_b;
-	t_data	*top_a;
-	t_data	*bottom_a;
+	t_data	*current;
+	t_data	*min_cost_value;
 
-	if (!stack_b || !*stack_b || !stack_a || !*stack_a)
-		return ;
-	while (*stack_b)
+	while (*stack_a)
 	{
-		curr = *stack_a;
-		get_top_and_bottom(curr, &top_a, &bottom_a);
-		top_b = *stack_b;
-		if (top_b->content && top_a->content)
+		current = *stack_b;
+		min_cost_value = current; //the minimum movements is 1 and that is pa
+		min_cost_value->cost = calculate_cost(min_cost_value);
+		while (current)
 		{
-			if (*(int *)top_b->content > *(int *)top_a->content)
-				rotate_a(stack_a);
-			else if (*(int *)top_b->content < *(int *)bottom_a->content
-					&& *(int *)bottom_a->content != max_value)
-				reverse_rotate_a(stack_a);
-			else
-				push_a(stack_b, stack_a);
+			current->cost = calculate_cost(current);
+			if (current->cost < min_cost_value->cost)
+				min_cost_value = current;
+			current = current->next;
 		}
+		send_mcv(stack_a, stack_b, min_cost_value);
 	}
-	while (!sorted(stack_a))
-		rotate_a(stack_a);
 }
 
-void	extract_lower_bound(t_data **stack_a, t_data **stack_b, int median,
-		const int size)
+int calculate_cost()
+
+void	extract_lower_bound(t_data **stack_a, t_data **stack_b, int median, int size)
 {
 	int		n;
 	t_data	*top;
@@ -76,12 +84,12 @@ void	extract_lower_bound(t_data **stack_a, t_data **stack_b, int median,
 		if (sorted(stack_a))
 			return ;
 		top = *stack_a;
-		if (*(int *)top->content < median) //find lower cost value under median
+		if (*(int *)top->content < median)
 			push_b(stack_a, stack_b);
 		else
 			rotate_a(stack_a);
 		n--;
-	}
+	}	
 }
 
 
@@ -107,17 +115,4 @@ int	calculate_median(t_data **stack_a, int n)
 	median = copy_stack[n / 2];
 	free(copy_stack);
 	return (median);
-}
-
-void	get_top_and_bottom(t_data *stack, t_data **top, t_data **bottom)
-{
-	*top = stack;
-	*bottom = stack;
-	if (!stack)
-		return ;
-	while (stack->next)
-	{
-		stack = stack->next;
-		*bottom = stack;
-	}
 }

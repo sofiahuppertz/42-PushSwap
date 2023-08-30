@@ -75,7 +75,6 @@ void trio_sort(t_data **stack_a);
 
 int calculate_cost(t_data *current, int size_a, int size_b);
 int check_reversed_top(t_data **stack);
-int 	ft_abs(int n);
 int	get_max(t_data **stack);
 int		get_min(t_data **stack);
 int get_min_idx(t_data **stack_a);

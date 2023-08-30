@@ -23,5 +23,15 @@ int main(int argc, char *argv[])
     stack_b = NULL;
     parse(argc, argv, &stack_a);
     push_swap(&stack_a, &stack_b);
+    
+    /*
+    ft_printf("sorted list\n");
+    while (stack_a)
+    {
+        ft_printf("%d\n", *(int *)stack_a->content);
+        stack_a = stack_a->next;
+    }
+    */
+    
     delete_lst(&stack_a, free);
 }

@@ -1,72 +1,60 @@
 
 #include "../push_swap.h"
 
-void	insert_node(t_data **lst, t_data *new_lst)
-{
-	t_data	*node;
+// Inserts a new node at the end of the list.
+void insert_node(t_data **lst, t_data *new_node) {
+    if (!lst || !new_node) {
+        return;
+    }
 
-	if (lst != NULL)
-	{
-		if (*lst != NULL)
-		{
-			node = *lst;
-			while (node->next)
-				node = node->next;
-			node->next = new_lst;
-		}
-		else
-		{
-			*lst = new_lst;
-		}
-	}
+    if (!*lst) {
+        *lst = new_node;
+        return;
+    }
+
+    t_data *current = *lst;
+    while (current->next) {
+        current = current->next;
+    }
+    current->next = new_node;
 }
 
-void delete_lst(t_data **lst, void (*del)(void *))
-{
-	t_data	*node;
+// Deletes a list and frees its contents.
+void delete_lst(t_data **lst, void (*del_func)(void *)) {
+    if (!lst || !*lst || !del_func) {
+        return;
+    }
 
-	node = *lst;
-	if (lst)
-	{
-		while (node != NULL)
-		{
-			*lst = node->next;
-			if (node != NULL && node->content != NULL)
-			{
-				(del)(node->content);
-				free(node);
-				node = NULL;
-			}
-			node = *lst;
-		}
-	}
+    t_data *current;
+    while (*lst) {
+        current = *lst;
+        *lst = current->next;
+
+        del_func(current->content);
+        free(current);
+    }
 }
 
+// Returns the size of the list.
+int get_size(t_data *lst) {
+    int count = 0;
+    t_data *current = lst;
 
-
-int	get_size(t_data *lst)
-{
-	int		count;
-	t_data	*node;
-
-	count = 0;
-	node = lst;
-	while (node != NULL)
-	{
-		count++;
-		node = node->next;
-	}
-	return (count);
+    while (current) {
+        count++;
+        current = current->next;
+    }
+    return count;
 }
 
-t_data	*create_node(void *content)
-{
-	t_data	*new;
+// Creates a new node with given content.
+t_data *create_node(void *content) {
+    t_data *new_node = (t_data *)malloc(sizeof(t_data));
+    if (!new_node) {
+        return NULL;
+    }
 
-	new = (t_data *)malloc(sizeof(t_data));
-	if (!new)
-		return (NULL);
-	new->content = content;
-	new->next = NULL;
-	return (new);
+    new_node->content = content;
+    new_node->next = NULL;
+    return new_node;
 }

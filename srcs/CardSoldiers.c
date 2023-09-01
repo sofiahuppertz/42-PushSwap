@@ -13,19 +13,24 @@
 #include "../push_swap.h"
 
 
-int check_reversed_top(t_data **stack)
+void rearrange_stack(t_data **stack_a, int size)
 {
-    t_data *first;
-    t_data *next;
+	int min_val;
 
-    if (!stack || !(*stack) || !(*stack)->next)
-        return (0);
-    first = *stack;
-    next = first->next;
-    if (*(int *)first->content < *(int *)next->content)
-        return (1);
-    else
-        return (0);     
+	min_val = get_min_idx(stack_a);
+	if (min_val < size / 2)
+		while (min_val > 0)
+		{
+			rotate_a(stack_a, 1);
+			min_val -= 1;
+		}
+	else
+		while (min_val < size)
+		{
+			reverse_rotate_a(stack_a, 1);
+			min_val += 1;
+		}
+	return;
 }
 
 int	get_max(t_data **stack)
@@ -46,43 +51,66 @@ int	get_max(t_data **stack)
 	return (max);
 }
 
-void	quicksort(int *arr, int low, int high)
+int		get_min(t_data **stack)
 {
-	int	pivotal;
+	t_data	*ptr;
+	int		min;
 
-	if (low < high)
+	ptr = *stack;
+	min = *(int *)ptr->content;
+	while (ptr)
 	{
-		pivotal = partition(arr, low, high);
-		quicksort(arr, low, pivotal - 1);
-		quicksort(arr, pivotal + 1, high);
+		if (*(int *)ptr->content < min)
+			min = *(int *)ptr->content;
+		ptr = ptr->next;
 	}
+	return (min);
 }
 
-int	partition(int *arr, int low, int high)
+int	get_min_idx(t_data **stack_a)
 {
-	int	pivotal;
-	int	i;
+	t_data *ptr;
+	int min;
+	int index;
+	int index_min;
 
-	pivotal = arr[high];
-	i = low;
-	for (int j = low; j < high; j++)
+	if (!stack_a || !(*stack_a) || !(*stack_a)->next)
+		return (-1);
+	ptr = *stack_a;
+	min = *(int *)ptr->content;
+	index = 0;
+	index_min = 0;
+	while (ptr)
 	{
-		if (arr[j] <= pivotal)
+		if (*(int *)ptr->content < min)
 		{
-			swap(&(arr[i]), &(arr[j]));
-			i++;
+			min = *(int *)ptr->content;
+			index_min = index;
 		}
+		index += 1;
+		ptr = ptr->next;
 	}
-	swap(&(arr[high]), &(arr[i]));
-	return (i);
+	return (index_min);
 }
 
-void	swap(int *a, int *b)
+void set_holds(int *first_hold, int *last_hold, int *index, t_data **ptr, t_data **stack_a, int bound)
 {
-	int	tmp;
-
-	tmp = *a;
-	*a = *b;
-	*b = tmp;
+	set_inital_params(index, first_hold, last_hold, ptr, stack_a);
+	while (*ptr)
+	{
+		if (*(int *)(*ptr)->content < bound)
+		{
+			if (*first_hold == -1)
+				*first_hold = *index;
+			*last_hold = *index;
+		}
+		*index += 1;
+		*ptr = (*ptr)->next;
+	}
 }
+
+
+
+
+
 

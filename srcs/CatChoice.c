@@ -49,28 +49,3 @@ int	sorted(t_data **stack_a)
 	return (1);
 }
 
-int	get_min_idx(t_data **stack_a)
-{
-	t_data *ptr;
-	int min;
-	int index;
-	int index_min;
-
-	if (!stack_a || !(*stack_a) || !(*stack_a)->next)
-		return (-1);
-	ptr = *stack_a;
-	min = *(int *)ptr->content;
-	index = 0;
-	index_min = 0;
-	while (ptr)
-	{
-		if (*(int *)ptr->content < min)
-		{
-			min = *(int *)ptr->content;
-			index_min = index;
-		}
-		index += 1;
-		ptr = ptr->next;
-	}
-	return (index_min);
-}

@@ -8,8 +8,10 @@ SRC_NAMES = Alice.c \
 	CardSoldiers.c \
 	CatChoice.c \
 	CaterpillarListHandlers.c \
+	CheschireCostSmile.c \
 	CheschireCostSort.c \
 	MiniatureDoorSort.c \
+	MoreCardSoldiers.c \
 	QueenOfHeartSort.c \
 	WhiteRabbitHelpers.c \
 	WhiteRabbitParser.c \

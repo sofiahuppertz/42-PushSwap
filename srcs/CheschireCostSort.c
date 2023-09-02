@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   CheschireCostSort.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: shuppert <shuppert@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/02 19:29:15 by shuppert          #+#    #+#             */
+/*   Updated: 2023/09/02 20:29:40 by shuppert         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../push_swap.h"
 
@@ -19,86 +30,90 @@ void	minimum_cost_sort(t_data **stack_a, t_data **stack_b)
 			ptr = ptr->next;
 		}
 		if (!min_cost_value)
-			return;
+			return ;
 		min_cost_operation(stack_a, stack_b, min_cost_value);
 	}
 }
 
-int calculate_cost(t_data *current, int size_a, int size_b)
+int	calculate_cost(t_data *current, int size_a, int size_b)
 {
-	int cost;
+	int	cost;
 
 	if (current->pos > size_b / 2)
 		current->moves_b = -1 * (size_b - current->pos);
 	else
 		current->moves_b = current->pos;
-	
 	if (current->assoc_pos > size_a / 2)
 		current->moves_a = -1 * (size_a - current->assoc_pos);
 	else
 		current->moves_a = current->assoc_pos;
 	cost = abs(current->moves_a) + abs(current->moves_b);
-	return(cost);
-
+	return (cost);
 }
 
-void iterate_and_set_cost(t_data **stack_a, t_data **stack_b) 
+void	iterate_and_set_cost(t_data **stack_a, t_data **stack_b)
 {
-    t_data *current = *stack_b;
-	int size_a;
-	int size_b;
+	t_data	*current;
+	t_data	*ptr;
+	int		size_a;
+	int		size_b;
+
+	current = *stack_b;
 	size_a = get_size(*stack_a);
 	size_b = get_size(*stack_b);
-    while (current)
+	while (current)
 	{
 		set_pos(current, stack_b);
-		set_assoc_pos(current, stack_a);
-    	current->cost = calculate_cost(current, size_a, size_b);
-        current = current->next;
-    }
+		ptr = *stack_a;
+		set_assoc_pos(current, &ptr);
+		current->cost = calculate_cost(current, size_a, size_b);
+		current = current->next;
+	}
 }
 
-void set_pos(t_data *current, t_data **stack_b) 
+void	set_pos(t_data *current, t_data **stack_b)
 {
-    int i = 0;
-    t_data *ptr = *stack_b;
-    
-    while (ptr) {
-        if (ptr->id == current->id) {
-            current->pos = i;
-            return;
-        }
-        i++;
-        ptr = ptr->next;
-    }
+	int		i;
+	t_data	*ptr;
+
+	i = 0;
+	ptr = *stack_b;
+	while (ptr)
+	{
+		if (ptr->id == current->id)
+		{
+			current->pos = i;
+			return ;
+		}
+		i++;
+		ptr = ptr->next;
+	}
 }
 
-void set_assoc_pos(t_data *current, t_data **stack_a)
+void	set_assoc_pos(t_data *current, t_data **ptr)
 {
-    int i = 0;
-    int min_a = get_min(stack_a);
-    t_data *ptr = *stack_a;
-    
-    current->assoc_pos = -1;
-    if (min_a > *(int *)current->content) {
-        current->assoc_pos = get_min_idx(stack_a);
-        return;
-    }
-    
-    while (ptr) {
-        if (*(int *)ptr->content < *(int *)current->content) {
-            if (ptr->next && (*(int *)ptr->next->content > *(int *)current->content)) {
-                current->assoc_pos = i + 1;
-                return;
-            } else if (!ptr->next && current->assoc_pos == -1) {
-                current->assoc_pos = i + 1;
-                return;
-            }
-        }
-        i++;
-        ptr = ptr->next;
-    }
+	int	i;
+
+	i = 0;
+	current->assoc_pos = -1;
+	if (get_min(ptr) > *(int *)current->data)
+	{
+		current->assoc_pos = get_min_idx(ptr);
+		return ;
+	}
+	while (ptr)
+	{
+		if (*(int *)(*ptr)->data < *(int *)current->data)
+		{
+			if ((*ptr)->next
+				&& (*(int *)(*ptr)->next->data > *(int *)current->data))
+				break ;
+			else if (!(*ptr)->next && current->assoc_pos == -1)
+				break ;
+		}
+		i++;
+		(*ptr) = (*ptr)->next;
+	}
+	current->assoc_pos = i + 1;
+	return ;
 }
-
-
-

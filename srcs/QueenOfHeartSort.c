@@ -6,7 +6,7 @@
 /*   By: shuppert <shuppert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:53:52 by shuppert          #+#    #+#             */
-/*   Updated: 2023/08/29 13:16:39 by shuppert         ###   ########.fr       */
+/*   Updated: 2023/09/02 20:21:14 by shuppert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	big_sort(t_data **stack_a, t_data **stack_b, int size)
 {
-	int *sorted_copy;
-	int quantile_bounds[5];
-	int i;
+	int	*sorted_copy;
+	int	quantile_bounds[5];
+	int	i;
 
 	sorted_copy = NULL;
 	sort_numbers(stack_a, stack_b, &sorted_copy, size);
@@ -30,18 +30,20 @@ void	big_sort(t_data **stack_a, t_data **stack_b, int size)
 	}
 	free(sorted_copy);
 	minimum_cost_sort(stack_a, stack_b);
-	rearrange_stack(stack_a, size);	
+	rearrange_stack(stack_a, size);
 }
 
-void sort_numbers(t_data **stack_a, t_data **stack_b, int **sorted_copy, int size)
+void	sort_numbers(t_data **stack_a, t_data **stack_b, int **sorted_copy,
+		int size)
 {
 	t_data	*current;
-	int i;
-	
+	int		i;
+
 	i = 0;
 	*sorted_copy = malloc(sizeof(int) * size);
 	if (!(*sorted_copy))
 	{
+		write(1, "It seems your out of space.", 28);
 		delete_lst(stack_a, free);
 		delete_lst(stack_b, free);
 		exit(1);
@@ -49,16 +51,17 @@ void sort_numbers(t_data **stack_a, t_data **stack_b, int **sorted_copy, int siz
 	current = *stack_a;
 	while (current && i < size)
 	{
-		(*sorted_copy)[i] = *(int *)current->content;
+		(*sorted_copy)[i] = *(int *)current->data;
 		current = current->next;
 		i += 1;
 	}
 	quicksort(*sorted_copy, 0, size - 1);
 }
 
-void calculate_quantile_bounds(int quantile_bounds[5], int *sorted_copy, int size)
+void	calculate_quantile_bounds(int quantile_bounds[5], int *sorted_copy,
+		int size)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < 4)
@@ -69,10 +72,10 @@ void calculate_quantile_bounds(int quantile_bounds[5], int *sorted_copy, int siz
 	quantile_bounds[4] = sorted_copy[size - 1];
 }
 
-void insert_id(t_data **stack_a, int *sorted, int size)
+void	insert_id(t_data **stack_a, int *sorted, int size)
 {
 	t_data	*current;
-	int i;
+	int		i;
 
 	current = *stack_a;
 	while (current)
@@ -80,7 +83,7 @@ void insert_id(t_data **stack_a, int *sorted, int size)
 		i = 0;
 		while (i < size)
 		{
-			if (*(int *)current->content == sorted[i])
+			if (*(int *)current->data == sorted[i])
 			{
 				current->id = i;
 				break ;
@@ -93,23 +96,20 @@ void insert_id(t_data **stack_a, int *sorted, int size)
 
 void	bucket_sort(t_data **stack_a, t_data **stack_b, int bound)
 {
-	int len;
-	int index;
-	int first_hold;
-	int last_hold;
-	t_data *ptr;
+	int		len;
+	int		first_hold;
+	int		last_hold;
 
 	len = get_size(*stack_a);
-	ptr = NULL;
 	while (len > 3)
-	{	
-		set_holds(&first_hold, &last_hold, &index, &ptr, stack_a, bound);
+	{
+		set_holds(&first_hold, &last_hold, stack_a, bound);
 		if (first_hold == -1)
-			return;
+			return ;
 		else if (first_hold < len - last_hold)
-			rotate_stack(stack_a, first_hold, 0, rotate_a);
-		else 
-			rotate_stack(stack_a, len, last_hold, reverse_rotate_a);
+			rotate_stack(stack_a, first_hold, 0, rotate);
+		else
+			rotate_stack(stack_a, len, last_hold, reverse_rotate);
 		push_b(stack_a, stack_b);
 		len -= 1;
 	}

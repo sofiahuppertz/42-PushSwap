@@ -6,7 +6,7 @@
 /*   By: shuppert <shuppert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:53:32 by shuppert          #+#    #+#             */
-/*   Updated: 2023/08/29 11:51:47 by shuppert         ###   ########.fr       */
+/*   Updated: 2023/09/02 20:21:14 by shuppert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,9 @@ int	sorted(t_data **stack_a)
 	ptr = *stack_a;
 	while (ptr->next)
 	{
-		if (*(int *)ptr->content > *(int *)ptr->next->content)
+		if (*(int *)ptr->data > *(int *)ptr->next->data)
 			return (0);
 		ptr = ptr->next;
 	}
 	return (1);
 }
-

@@ -13,6 +13,7 @@ SRC_NAMES = Alice.c \
 	MiniatureDoorSort.c \
 	MoreCardSoldiers.c \
 	QueenOfHeartSort.c \
+	ThroughTheLookingGlass.c \
 	WhiteRabbitHelpers.c \
 	WhiteRabbitParser.c \
 	WonderlandBasics.c \
